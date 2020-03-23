@@ -7,17 +7,13 @@
   },
   "mixins": {
     "CascadeDelete": {
-      "relations": [
-        "roleMapping"
-      ]
+      "relations": ["roleMapping", "projects"]
     }
   },
   "scope": {
     "include": [
       {
-        "roleMapping": [
-          "role"
-        ]
+        "roleMapping": ["role"]
       }
     ]
   },

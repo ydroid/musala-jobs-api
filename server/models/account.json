@@ -1,0 +1,115 @@
+{
+  "name": "account",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "mixins": {
+    "CascadeDelete": {
+      "relations": [
+        "roleMapping"
+      ]
+    }
+  },
+  "scope": {
+    "include": [
+      {
+        "roleMapping": [
+          "role"
+        ]
+      }
+    ]
+  },
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "socialAccount": {
+      "type": "boolean",
+      "default": false
+    },
+    "avatarUrl": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "roleMapping": {
+      "type": "hasOne",
+      "model": "RoleMapping",
+      "foreignKey": "principalId"
+    },
+    "projects": {
+      "type": "hasMany",
+      "model": "project",
+      "foreignKey": "ownerId"
+    },
+    "workedProjects": {
+      "type": "hasMany",
+      "model": "project",
+      "foreignKey": "workedId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "loginSocial"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {
+    "loginSocial": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "any",
+          "required": true,
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/loginSocial",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongo": {
+    "host": "${MONGODBHOST}",
+    "port": 27017,
+    "url": "${MONGODBURL}",
+    "database": "${MONGODBDATABASE}",
+    "password": "${MONGODBPASSWORD}",
+    "name": "mongo",
+    "user": "${MONGODBUSER}",
+    "useNewUrlParser": true,
+    "connector": "mongodb"
+  }
+}

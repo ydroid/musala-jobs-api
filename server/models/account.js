@@ -24,6 +24,10 @@ module.exports = function(Account) {
       }
     }
   });
+  Account.observe("after delete", async function(ctx) {
+    const Project = app.models.Project;
+    await Project.updateAll({ workedId: ctx.where.id }, { workedId: null });
+  });
 
   Account.loginSocial = async function(data) {
     let credential;
